@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Controller {
     // private List<Livro> livros;
-    @Autowired
-    private LivroRepository repository;
+    private final LivroService service;
+
+    public Controller(LivroService service) {
+        this.service = service;
+    }
 
     @GetMapping("")
     @CrossOrigin(origins = "*")
@@ -29,43 +32,43 @@ public class Controller {
     @GetMapping("livros")
     @CrossOrigin(origins = "*")
     public List<Livro> getListaLivros() {
-        return repository.getListaLivros();
+        return service.getListaLivros();
     }
 
     @GetMapping("autores")
     @CrossOrigin(origins = "*")
     public List<String> getListaAutores() {
-        return repository.getListaAutores();
+        return service.getListaAutores();
     }
 
     @GetMapping("titulos")
     @CrossOrigin(origins = "*")
     public List<String> getListaTitulos() {
-        return repository.getListaTitulos();
+        return service.getListaTitulos();
     }
 
     @GetMapping("livroporano/{ano}")
     public List<Livro> getLivroAno(@PathVariable int ano) {
-        return repository.getLivroAno(ano);
+        return service.getLivroAno(ano);
     }
 
     @GetMapping("/desatualizados/{ano}")
     public List<Livro> getDesatualizados(@PathVariable int ano) {
-        return repository.getDesatualizados(ano);
+        return service.getDesatualizados(ano);
     }
 
     @PostMapping("/livro")
     public List<Livro> addLivro(@RequestBody Livro l) {
-        return repository.addLivro(l);
+        return service.addLivro(l);
     }
 
     @PutMapping("/livros/{codigo}")
     public List<Livro> mudarLivro(@PathVariable int codigo, @RequestBody Livro l) {
-        return repository.mudarLivro(codigo, l);
+        return service.mudarLivro(codigo, l);
     }
 
     @DeleteMapping("/livros/{codigo}")
     public List<Livro> deletarLivro(@PathVariable int codigo) {
-        return repository.deletarLivro(codigo);
+        return service.deletarLivro(codigo);
     }
 }
